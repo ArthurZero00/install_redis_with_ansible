@@ -1,0 +1,19 @@
+---
+- hosts: Databases
+  become: yes
+  tasks:
+
+  - name: Updating repos
+    apt:
+      update_cache: yes
+
+  - name: Install Redis server
+    apt: 
+        name: redis-server
+        update_cache: yes
+
+  - name: Restarting Redis if changed
+    ansible.builtin.systemd:
+        name: redis-server
+        state: restarted
+        enabled: yes
